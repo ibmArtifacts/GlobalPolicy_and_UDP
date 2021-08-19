@@ -1,0 +1,43 @@
+global-policy: 1.0.0
+info:
+  name: extract-clientid
+  title: extract-clientid
+  version: 1.0.0
+  full-custom: true
+gateways:
+  - datapower-api-gateway
+assembly:
+  execute:
+    - cors:
+        version: 2.0.0
+        title: cors-in-preflow
+    - gatewayscript:
+        version: 2.0.0
+        title: gatewayscript
+        source: >
+          if(context.get('request.headers.authorization')){
+          var vAuth = context.get('request.headers.authorization');
+          console.log('****request.headers.authorization: ' + vAuth);
+          /*Base64 decode the token*/
+          var vDecodedAuthFULL = new Buffer(vAuth,'base64').toString('ascii');
+          console.debug('****Decoded.Auth.Header: ' + vDecodedAuthFULL);
+          /*Modify decoded token to fit json format*/
+          var vDecodedAuthSPLIT = JSON.parse(vDecodedAuthFULL.split('}.{'));
+          /*Set the apicid to x-ibm-client-id*/
+          var vAPICID = vDecodedAuthSPLIT.apicid;
+          context.set('request.headers.X-IBM-Client-Id',
+          vAPICID.replace(/\s/g, ''));
+          console.log('****Setting X-IBM-Client-Id header to: ' + vAPICID);
+          } else {
+          context.reject('Authorization Header not found', 'Authorization header not found');
+          context.message.statusCode = '401 Unauthorized';
+          }
+    - client-identification:
+        version: 2.0.0
+        title: client-security-in-preflow
+    - ratelimit:
+        version: 2.0.0
+        title: ratelimit-in-preflow
+    - security:
+        version: 2.0.0
+        title: security-in-preflow
