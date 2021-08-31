@@ -2,7 +2,7 @@ global-policy: 1.0.0
 info:
   name: extract-clientid
   title: extract-clientid
-  version: 1.0.0
+  version: 1.0.1
   full-custom: true
 gateways:
   - datapower-api-gateway
@@ -23,11 +23,11 @@ assembly:
           console.debug('****Decoded.Auth.Header: ' + vDecodedAuthFULL);
           /*Modify decoded token to fit json format*/
           var vDecodedAuthSPLIT = JSON.parse(vDecodedAuthFULL.split('}.{'));
-          /*Set the apicid to x-ibm-client-id*/
+          /*Set the apicid to client_id*/
           var vAPICID = vDecodedAuthSPLIT.apicid;
-          context.set('request.headers.X-IBM-Client-Id',
+          context.set('request.headers.client_id',
           vAPICID.replace(/\s/g, ''));
-          console.log('****Setting X-IBM-Client-Id header to: ' + vAPICID);
+          console.log('****Setting client_id header to: ' + vAPICID);
           } else {
           context.reject('Authorization Header not found', 'Authorization header not found');
           context.message.statusCode = '401 Unauthorized';
