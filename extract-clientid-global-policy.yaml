@@ -16,7 +16,7 @@ assembly:
         title: gatewayscript
         source: >
           if(context.get('request.headers.authorization')){
-          var vAuth = context.get('request.headers.authorization');
+          var vAuth = (context.get('request.headers.authorization').split(' ').pop());
           console.log('****request.headers.authorization: ' + vAuth);
           /*Base64 decode the token*/
           var vDecodedAuthFULL = new Buffer(vAuth,'base64').toString('ascii');
