@@ -2,7 +2,7 @@ global-policy: 1.0.0
 info:
   name: extract-clientid
   title: extract-clientid
-  version: 1.0.1
+  version: 1.0.2
   full-custom: true
 gateways:
   - datapower-api-gateway
@@ -50,7 +50,7 @@ assembly:
                   version: 2.0.0
                   title: 'gws:ClientID-with-no-secret'
                   source: >
-                    context.reject('No-Client_Secret-found', 'client_id was sent without client_secret. Please provide valid client_secret.');
+                    context.reject('Credentials-not-passed', 'Incorrect client_id and client_secret was sent. Please ensure client_id is sent with client_secret, or token is passed with authorization header.');
                     context.message.statusCode = '401 Unauthorized';
     - ratelimit:
         version: 2.0.0
