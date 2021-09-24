@@ -2,7 +2,7 @@ global-policy: 1.0.0
 info:
   name: extract-clientid
   title: extract-clientid
-  version: 1.0.2
+  version: 1.0.3
   full-custom: true
 gateways:
   - datapower-api-gateway
@@ -44,6 +44,15 @@ assembly:
               - client-identification:
                   version: 2.0.0
                   title: client-security-in-preflow
+              - client-security:
+                  version: 2.0.0
+                  title: client-security
+                  stop-on-error: true
+                  secret-required: true
+                  extract-credential-method: header
+                  client-auth-method: native
+                  id-name: client_id
+                  secret-name: client_secret
           - condition: $not($header("client_secret") and ($header("client_id")))
             execute:    
               - gatewayscript:
