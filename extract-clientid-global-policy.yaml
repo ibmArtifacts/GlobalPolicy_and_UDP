@@ -2,7 +2,7 @@ global-policy: 1.0.0
 info:
   name: extract-clientid
   title: extract-clientid
-  version: 1.0.3
+  version: 1.0.2
   full-custom: true
 gateways:
   - datapower-api-gateway
