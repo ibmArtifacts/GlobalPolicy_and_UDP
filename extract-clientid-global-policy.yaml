@@ -2,7 +2,7 @@ global-policy: 1.0.0
 info:
   name: extract-clientid
   title: extract-clientid
-  version: 1.0.2
+  version: 1.0.3
   full-custom: true
 gateways:
   - datapower-api-gateway
@@ -21,26 +21,41 @@ assembly:
                   version: 2.0.0
                   title: 'gws:DecodeToken-and-ExtractClientID'
                   source: >
-                    if(context.get('request.headers.authorization')){
+                    console.log('****Running DecodeToken-and-ExtractClientID****');
+                    if (context.get('request.headers.authorization')) {
                     var vAuth = (context.get('request.headers.authorization').split(' ').pop());
                     console.log('****request.headers.authorization (bearer removed): ' + vAuth);
                     /*Base64 decode the token*/
-                    var vDecodedAuthFULL = new Buffer(vAuth,'base64').toString('ascii');
+                    var vDecodedAuthFULL = new Buffer(vAuth, 'base64').toString('ascii');
                     console.debug('****Decoded.Auth.Header: ' + vDecodedAuthFULL);
-                    /*Modify decoded token to fit json format*/
-                    var vDecodedAuthSPLIT = JSON.parse(vDecodedAuthFULL.split('}.{'));
+                    console.debug('****Stringify_Decoded.Auth.Header: ' + JSON.stringify(vDecodedAuthFULL));
+                    /*Get apicid from decoded jwt*/
+                    var vAPICID = JSON.stringify(vDecodedAuthFULL.replace(/\s/g, '')).split('apicid\\":\\"').pop().split('\\')[0];
+                    /*Get key-id from decoded jwt*/
+                    var vKID = JSON.stringify(vDecodedAuthFULL.replace(/\s/g, '')).split('kid\\":\\"').pop().split('\\')[0];
                     /*Set the apicid to client_id*/
-                    var vAPICID = vDecodedAuthSPLIT.apicid;
-                    context.set('request.headers.client_id', vAPICID.replace(/\s/g, ''));
+                    context.set('request.headers.client_id', vAPICID);
                     console.log('****Setting client_id header to: ' + vAPICID);
-                    context.set('x-key-id', (vDecodedAuthSPLIT.kid).replace(/\s/g, ''));
-                    console.debug('****Key-Id: ' + (vDecodedAuthSPLIT.kid).replace(/\s/g, ''));
+                    /*Set key-id for down stream usage*/
+                    context.set('x-key-id', vKID);
+                    console.debug('****Key-Id: ' + vKID); 
                     }
               - client-identification:
                   version: 2.0.0
                   title: client-security-in-preflow
+              - security:
+                  version: 2.0.0
+                  title: security-in-preflow
+              - ratelimit:
+                  version: 2.0.0
+                  title: ratelimit-in-preflow
           - condition: ($header("client_id") and $header("client_secret"))
-            execute: 
+            execute:     
+              - gatewayscript:
+                  version: 2.0.0
+                  title: 'gws:condition2-log'
+                  source: >
+                    console.log('****Client_ID and Client_Secret condition2****');
               - client-identification:
                   version: 2.0.0
                   title: client-security-in-preflow
@@ -53,17 +68,18 @@ assembly:
                   client-auth-method: native
                   id-name: client_id
                   secret-name: client_secret
+              - security:
+                  version: 2.0.0
+                  title: security-in-preflow
+              - ratelimit:
+                  version: 2.0.0
+                  title: ratelimit-in-preflow
           - condition: $not($header("client_secret") and ($header("client_id")))
             execute:    
               - gatewayscript:
                   version: 2.0.0
                   title: 'gws:ClientID-with-no-secret'
                   source: >
+                    console.log('****NO Client_ID and Client_Secret condition3****');
                     context.reject('Credentials-not-passed', 'Incorrect client_id and client_secret was sent. Please ensure client_id is sent with client_secret, or token is passed with authorization header.');
                     context.message.statusCode = '401 Unauthorized';
-    - ratelimit:
-        version: 2.0.0
-        title: ratelimit-in-preflow
-    - security:
-        version: 2.0.0
-        title: security-in-preflow
