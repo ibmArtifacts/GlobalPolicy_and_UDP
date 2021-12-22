@@ -1,4 +1,4 @@
-These artifacts are for APIC v10.  
+These artifacts are for APIC v10 and v2018.  
 
 The artifacts showcase a specific samples for [IBM API Connect Global Policies](https://www.ibm.com/docs/en/api-connect/10.0.1.x?topic=applications-working-global-policies) and [IBM API Connect User-Defined Policies (Custom Policies)](https://www.ibm.com/docs/en/api-connect/10.0.1.x?topic=authoring-policies).  
 
