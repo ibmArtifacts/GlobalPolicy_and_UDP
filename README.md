@@ -23,9 +23,9 @@ NOTE: The inbound client_id and client_secret field can be set to something diff
 ----  
 Next:  
   
-[User-Defined Policy: Validate KID --> Deploy, use, and remove](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/User-Defined%20Policy:%20Validate.md)  
+[User-Defined Policy: Validate KID --> Deploy, use, and remove](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/2.%20User-Defined%20Policy:%20Validate.md)  
   
-[Global Policy: Decode JWT and Extract client_ID --> Deploy, and remove](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/Global%20Policy:%20Decode%20JWT%20and%20Extract%20client_id.md)  
+[Global Policy: Decode JWT and Extract client_ID --> Deploy, and remove](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/3.%20Global%20Policy:%20Decode%20JWT%20and%20Extract%20client_id.md)  
   
   
 
