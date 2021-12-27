@@ -20,9 +20,11 @@ or
   
 NOTE: The inbound client_id and client_secret field can be set to something different, like X-IBM-Client-Id, clientid, or etc., but it has to be updated in the extract-clientid-global-policy.yaml.  
   
-----
+----  
+Next:  
   
 [User-Defined Policy: Validate KID --> Deploy, use, and remove](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/User-Defined%20Policy:%20Validate.md)  
+  
 [Global Policy: Decode JWT and Extract client_ID --> Deploy, and remove](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/Global%20Policy:%20Decode%20JWT%20and%20Extract%20client_id.md)  
   
   
