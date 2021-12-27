@@ -1,5 +1,6 @@
-## Global Policy: Decode JWT and Extract client_id
-Prerequisites:
+## Global Policy: Decode JWT and Extract client_id  
+
+Prerequisites:  
 •	Download the extract-client_id-global-policy.yaml if not done already: [extract-client_id-global-policy.yaml](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/extract-client_id-global-policy.yaml)  
 •	Ensure you download and set the version of the APIC Toolkit matching your APIC version: [APIC toolkit](https://www.ibm.com/docs/en/api-connect/10.0.x?topic=configuration-installing-toolkit)  
 
