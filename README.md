@@ -10,7 +10,9 @@ The [extract-clientid-global-policy.yaml](https://github.com/ibmArtifacts/Global
 
 ## User-Defined Policy: Validate Key ID (KID) 
 The [validate-kid-udp.zip](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/validate-kid-udp.zip) APIC User-Defined Policy is an Assemble policy, which each API requiring this specific security mechinism will use, which will:
-1. Take the set KID variable from the extract-clientid-global-policy (the clientid and key-id) and validate the list of KIDs from the response of the keystore which URL points to.
+1. Take the set KID variable from the extract-clientid-global-policy (the clientid and key-id from above) and validate the list of KIDs from the response of the keystore which URL points to.  
+  
+NOTE: This User-Defined policy has very specific needs, as it show cases how to call out to another system, parse through the response, and match a certain value (the KID in this case) with the value from the request to validate against. Although, you can update the code within the User-Defined Policy zip to validate whatever you need, and it does not have to be that elaborate (calling out to another system).  
   
 ----
 The global policy and custom policy allows for an API (published on IBM API Connect) capable of handing both:  
