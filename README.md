@@ -4,9 +4,9 @@ The artifacts showcase specific samples for [IBM API Connect Global Policies](ht
 
 ## Global Policy: Decode JWT & Extract client_id
 The [extract-clientid-global-policy.yaml](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/extract-clientid-global-policy.yaml) APIC Global Policy is a pre-flow policy, which will:
-1. Take the requestor's inbound JWT and Base64 decode the Bearer <jwt>.
-2. Extract the apicid and kid (key-ID) value from the decoded JWT.
-3. Then set the apicid to the client_id header for downstream processing on the APIC API, and set kid (Key-ID) value to a variable to be used downstream as well.  
+1. Take the requestor's inbound JWT and Base64 decode.
+2. Extract the apicid and KID (key-ID) value from the decoded JWT.
+3. Then set the apicid to the client_id header for downstream processing on the APIC API, and set KID (Key-ID) value to a variable to be used downstream as well.  
 
 ## User-Defined Policy: Validate Key ID (KID) 
 The [validate-kid-udp.zip](https://github.com/ibmArtifacts/GlobalPolicy_and_UDP/blob/main/validate-kid-udp.zip) APIC User-Defined Policy is an Assemble policy, which each API requiring this specific security mechinism will use, which will:
